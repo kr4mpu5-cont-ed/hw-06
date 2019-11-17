@@ -5,37 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/styles/style.css" />
     <title>Weather Dashboard</title>
   </head>
 
-  <body>
-    <div class="container">
+  <body class="bg-light">
 
-        <nav class="navbar navbar-dark bg-dark">
-            <h1 class="navbar-brand mx-auto mb-0 h1">Weather Dashboard</h1>
-        </nav>
+    <nav class="navbar navbar-dark bg-dark">
+      <h1 class="text-white mx-auto">Weather Dashboard</h1>
+    </nav>
 
-        <div class="temp-border">Search input</div>
-        <div class="temp-border">Search Hx [clicking runs new search for that city]</div>
+    <div class="container-fluid">
 
-        <div class="temp-border">[Current wx conditions]
-            <h2><span class="city"></span> <span class="date" id="currentDay">()</span> <span><img src='' alt='wx icon' class="icon" /></span></h2>
-            <div class="temp"></div>
-            <div class="humidity"></div>
-            <div class="wind"></div>
-            <div class="uv">UX Index: [icon]</div>
+        <div class="row pt-3">
+            <div class="col-sm-4">
+              <div class="pb-3">
+                <h3>Search for a city:</h3>
+                <form class="form-inline">
+                    <label class="sr-only" for="city">City</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="city" placeholder="City">
+                    <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i></button>
+                  </form>
+              </div>
+              <div>
+                  <div class="list-group">
+                      <a href="#" class="list-group-item list-group-item-action active">Austin</a>
+                      <a href="#" class="list-group-item list-group-item-action">City</a>
+                      <a href="#" class="list-group-item list-group-item-action">City</a>
+                      <a href="#" class="list-group-item list-group-item-action">City</a>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-8 bg-white">
+                <div class="border p-3">
+                  <h2><span class="city"></span> <span class="date" id="currentDay">()</span> <span class=""><img src='' alt='wx icon' class="icon" /></span></h2>
+                  <div class="temp"></div>
+                  <div class="humidity"></div>
+                  <div class="wind"></div>
+                  <div class="uv">UX Index: [icon]</div>
+                </div>
+                  <div class="p-3">
+                  <h2>5-day forecast</h2>
+
+                  <div class="card-deck">
+                    <div class="card bg-primary text-white">
+                      <!-- <img src="..." class="card-img-top" alt="..."> -->
+                      <div class="card-body">
+                        <h5 class="card-title">Date</h5>
+                        <p class="card-text">
+                          Icon<br/>
+                          Temp (F)<br/>
+                          Humidity<br/>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                      <!-- <img src="..." class="card-img-top" alt="..."> -->
+                      <div class="card-body">
+                        <h5 class="card-title">Date</h5>
+                        <p class="card-text">
+                          Icon<br/>
+                          Temp (F)<br/>
+                          Humidity<br/>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                      <!-- <img src="..." class="card-img-top" alt="..."> -->
+                      <div class="card-body">
+                        <h5 class="card-title">Date</h5>
+                        <p class="card-text">
+                          Icon<br/>
+                          Temp (F)<br/>
+                          Humidity<br/>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <div class="card-body">
+                          <h5 class="card-title">Date</h5>
+                          <p class="card-text">
+                            Icon<br/>
+                            Temp (F)<br/>
+                            Humidity<br/>
+                          </p>
+                        </div>
+                    </div>
+                    <div class="card bg-primary text-white">
+                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <div class="card-body">
+                          <h5 class="card-title">Date</h5>
+                          <p class="card-text">
+                            Icon<br/>
+                            Temp (F)<br/>
+                            Humidity<br/>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>                    
+            </div>
         </div>
-        <div class="temp-border">
-            5-day forecast (5 cards)
-            Date
-            Icon
-            Temp (F)
-            Humidity
-        </div>
-
+ 
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

@@ -57,7 +57,7 @@ $.ajax({
     $("#currentDay").text('(' + dateToday + ')');
     console.log('icon: ' + wxResponse.weather[0].icon);
     //http://openweathermap.org/img/wn/10d@2x.png
-    var wxIcon = 'http://openweathermap.org/img/wn/' + wxResponse.weather[0].icon + '@2x.png';
+    var wxIcon = 'http://openweathermap.org/img/wn/' + wxResponse.weather[0].icon + '.png';
     $('.icon').attr('src', wxIcon);
     $('.temp').html('Temperature: ' + wxResponse.main.temp + ' &#8457;');
     $('.humidity').text('Humidity: ' + wxResponse.main.humidity + ' %');
@@ -70,8 +70,7 @@ $.ajax({
     console.log('lat: ' + wxResponse.coord.lat);
     qUVLon = wxResponse.coord.lon;
     qUVLat = wxResponse.coord.lat;
-  },
-  console.log('hi'));
+  });
 
 //   var qUVAppid = '&appid=c3ff54472e40c55c3d6d8d12a0c1bc41';
                   // http://api.openweathermap.org/data/2.5/uvi?appid={appid}&lat={lat}&lon={lon}
@@ -90,6 +89,7 @@ $.ajax({
 
 // ************************
 function getCurrentWeather() {
+  console.log('running getCurrentWeather()');
     return $.ajax({
         url: qWxQueryURL,
         method: 'GET'      
@@ -97,6 +97,7 @@ function getCurrentWeather() {
  }
  
  function getUV(data, textStatus, jqXHR) {
+  console.log('running getUV()');
     return $.ajax({
         url: qUVQueryURL,
         method: 'GET'
@@ -110,6 +111,7 @@ function getCurrentWeather() {
  
  function main() {
     getCurrentWeather().then(getUV).then(getFiveDayForecast);
+    console.log('main() done');
  }
 // ************************
 
