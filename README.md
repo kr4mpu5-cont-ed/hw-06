@@ -1,1 +1,35 @@
-# hw-06
+# hw-06: Weather Dashboard
+
+## Features
+* Display [City, Date, Weather icon, Temperature, Humidity, Wind speed, UV index] under current weather conditions:
+* Include a search history of past search terms, selection of each performing new search
+* Include a 5-Day Forecast below the current weather conditions that displays [Date, Weather icon, Temperature, Humidity]
+* Use functions for [Current conditions, 5-Day Forecast, Search history, UV index]
+* Make multiple AJAX calls
+* Hardcode some of the parameters in the API's URL, accept user input for the others
+* Use `localStorage` to store any persistent data
+
+## Minimum Requirements
+* Functional, deployed application.
+* ~~GitHub repository with a unique name and a README describing the project~~
+* User can search for weather reports by city using the openweathermap API
+* After searching for a city, the following information is displayed:
+  *  Current temperature
+  *  Current humidity
+  *  Windspeed
+  *  Uv index
+  *  5 day forecast
+* Application uses icons to represent weather conditions
+* Application stores previously searched for cities in localstorage and displays them to the user
+* Application loads last searched city forecast on page load
+
+## Bonus
+* Use the [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) to add the user's current location to the initial landing page.
+
+## Submission on BCS
+* ~~The URL of the deployed application~~
+* ~~The URL of the GitHub repository~~
+
+[//] ## **All functional requirements met.**
+
+[deployed app](https://kr4mpu5.github.io/hw-06/)
