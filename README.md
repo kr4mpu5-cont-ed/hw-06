@@ -17,7 +17,7 @@
   *  Current temperature
   *  Current humidity
   *  Windspeed
-  *  Uv index
+  *  UV index
   *  5 day forecast
 * Application uses icons to represent weather conditions
 * Application stores previously searched for cities in localstorage and displays them to the user
