@@ -22,7 +22,7 @@
         <div class="row pt-3">
             <div class="col-sm-4">
               <div class="pb-3">
-                <h3>Search for a city:</h3>
+                <!-- <h3>Search</h3> -->
                 <form class="form-inline">
                     <label class="sr-only" for="city">City</label>
                     <input type="text" class="form-control mb-2 mr-sm-2" id="city" placeholder="City">
@@ -41,73 +41,16 @@
             <div class="col-sm-8 bg-white">
                 <div class="border p-3">
                   <h2><span class="city"></span> <span class="date" id="currentDay">()</span> <span class=""><img src='' alt='wx icon' class="icon" /></span></h2>
-                  <div class="temp"></div>
-                  <div class="humidity"></div>
-                  <div class="wind"></div>
-                  <div class="uv">UX Index: [icon]</div>
+                  <span style="line-height: 2.2em;">
+                    <div class="temp"></div>
+                    <div class="humidity"></div>
+                    <div class="wind"></div>
+                    <div class="uv">UX Index: [icon]</div>
+                  </span>
                 </div>
                   <div class="p-3">
-                  <h2>5-day forecast</h2>
-
-                  <div class="card-deck">
-                    <div class="card bg-primary text-white">
-                      <!-- <img src="..." class="card-img-top" alt="..."> -->
-                      <div class="card-body">
-                        <h5 class="card-title">Date</h5>
-                        <p class="card-text">
-                          Icon<br/>
-                          Temp (F)<br/>
-                          Humidity<br/>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="card bg-primary text-white">
-                      <!-- <img src="..." class="card-img-top" alt="..."> -->
-                      <div class="card-body">
-                        <h5 class="card-title">Date</h5>
-                        <p class="card-text">
-                          Icon<br/>
-                          Temp (F)<br/>
-                          Humidity<br/>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="card bg-primary text-white">
-                      <!-- <img src="..." class="card-img-top" alt="..."> -->
-                      <div class="card-body">
-                        <h5 class="card-title">Date</h5>
-                        <p class="card-text">
-                          Icon<br/>
-                          Temp (F)<br/>
-                          Humidity<br/>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="card bg-primary text-white">
-                        <!-- <img src="..." class="card-img-top" alt="..."> -->
-                        <div class="card-body">
-                          <h5 class="card-title">Date</h5>
-                          <p class="card-text">
-                            Icon<br/>
-                            Temp (F)<br/>
-                            Humidity<br/>
-                          </p>
-                        </div>
-                    </div>
-                    <div class="card bg-primary text-white">
-                        <!-- <img src="..." class="card-img-top" alt="..."> -->
-                        <div class="card-body">
-                          <h5 class="card-title">Date</h5>
-                          <p class="card-text">
-                            Icon<br/>
-                            Temp (F)<br/>
-                            Humidity<br/>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-
+                    <h2>5-day forecast</h2>
+                    <div class="card-deck" id="wxCards"></div>
                   </div>                    
             </div>
         </div>
