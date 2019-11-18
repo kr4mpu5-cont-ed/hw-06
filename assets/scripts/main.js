@@ -10,7 +10,7 @@ $(document).ready(function() {
 // OpenWeather query URLs
   var qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
   // qUVQueryURL needs lat/long from getCurrentWeather() for valid request
-  var qUVQueryURL = 'http://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
+  var qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
   // returned by getCurrentWeather()
   var qUVLon;
   var qUVLat;
@@ -28,8 +28,8 @@ function getCurrentWeather() {
     // populate date in header: Day, Month Date
     var dateToday = moment().format('M/D/YYYY');
     $("#currentDay").text('(' + dateToday + ')');
-    //http://openweathermap.org/img/wn/10d@2x.png
-    var wxIcon = 'http://openweathermap.org/img/wn/' + wxResponse.weather[0].icon + '.png'; // todo: more elegant method than assuming 0th index?
+    //https://openweathermap.org/img/wn/10d@2x.png
+    var wxIcon = 'https://openweathermap.org/img/wn/' + wxResponse.weather[0].icon + '.png'; // todo: more elegant method than assuming 0th index?
     var wxIconAlt = wxResponse.weather[0].main;
     $('.icon').attr('src', wxIcon);
     $('.icon').attr('alt', wxIconAlt);
@@ -103,7 +103,7 @@ function getFiveDayForecast() {
         <div class="card-body">
           <h5 class="card-title">${wxCardTime}</h5>
           <p class="card-text">
-            <img src="http://openweathermap.org/img/wn/${wxCardIcon}.png" alt="${wcCardIconAlt}" /><br/>
+            <img src="https://openweathermap.org/img/wn/${wxCardIcon}.png" alt="${wcCardIconAlt}" /><br/>
             Temp: ${subFiveDayResp[i].main.temp} &#8457;<br/>
             Humidity: ${subFiveDayResp[i].main.humidity} %<br/>
           </p>
