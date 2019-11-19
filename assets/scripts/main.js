@@ -1,26 +1,61 @@
 $(document).ready(function() {
 
-// todo: implement get city input
-// todo: remove example: var qCity = $('#id-of-some-field').val().trim();
-  var qWxCity = '&q=Austin';
+// set up vars
+var wxCity;
+var qWxCity;
 // set units
-  var qWxUnits = '&units=imperial';
+var qWxUnits = '&units=imperial';;
 // API key
-  var qOWAPI = '&appid=c3ff54472e40c55c3d6d8d12a0c1bc41';
-// OpenWeather query URLs
-  var qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
-  // qUVQueryURL needs lat/long from getCurrentWeather() for valid request
-  var qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
-  // returned by getCurrentWeather()
-  var qUVLon;
-  var qUVLat;
-  var qWxFiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?' + qWxCity + qWxUnits + qOWAPI;
+var qOWAPI = '&appid=c3ff54472e40c55c3d6d8d12a0c1bc41';;
+var qWxQueryURL;
+var qUVQueryURL;
+var qUVLon;
+var qUVLat;
+var qWxFiveDayForecastURL;
 
-function getCurrentWeather() {
+$('#search').click(function(event) {
+  event.preventDefault();
+  wxCity = $('#city').val().trim();
+  qWxCity = '&q=' + wxCity;
+  console.log(qWxCity);
+  // OpenWeather query URLs
+  qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
+  // qUVQueryURL needs lat/long from getCurrentWeather() for valid request
+  qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
+  // returned by getCurrentWeather()
+  qWxFiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?' + qWxCity + qWxUnits + qOWAPI;
+
+  updateCitiesSearched();
+  // todo: implement write to localStorage
+
+  main(qWxCity);
+});
+
+$('#citiesSearched').on('click', 'a', function(event) {
+  // event.preventDefault;
+  console.log('in city click event');
+  console.log('this: ' + $(this));
+  console.log('this.val().trim(): ' + $(this).val().trim());
+  var newWxCity = $(this).val().trim();
+  console.log('newWxCity: ' + newWxCity);
+});
+
+// todo: implement click to search >> reorder list
+// todo: improvement: prevent dupes? / replace older instance with newer?
+function updateCitiesSearched() {
+  var newCity = `<a href="#" class="list-group-item list-group-item-action citySearch" style="text-transform:capitalize;">${wxCity}</a>`;
+  $('#citiesSearched').prepend(newCity);
+  // <a href="#" class="list-group-item list-group-item-action active">Austin</a>
+  // <a href="#" class="list-group-item list-group-item-action">City</a>
+}
+
+// todo: need to clear before displaying new search results?
+function getCurrentWeather(qWxCity) {
   return $.ajax({
       url: qWxQueryURL,
       method: 'GET'      
   }).then(function(wxResponse) {
+    console.log('in getCurrentWeather(): ' + qWxCity);
     // Log the queryURL
     // Log the resulting object
     // Populate HTML with wx response
@@ -28,11 +63,14 @@ function getCurrentWeather() {
     // populate date in header: Day, Month Date
     var dateToday = moment().format('M/D/YYYY');
     $("#currentDay").text('(' + dateToday + ')');
+    // Set weather icon and alt text
     //https://openweathermap.org/img/wn/10d@2x.png
     var wxIcon = 'https://openweathermap.org/img/wn/' + wxResponse.weather[0].icon + '.png'; // todo: more elegant method than assuming 0th index?
     var wxIconAlt = wxResponse.weather[0].main;
-    $('.icon').attr('src', wxIcon);
-    $('.icon').attr('alt', wxIconAlt);
+    // $('.icon').attr('src', wxIcon);
+    // $('.icon').attr('alt', wxIconAlt);
+    $('#wxIcon').html('<img src="' + wxIcon + '" alt="' + wxIconAlt + '" />');
+    // $('#theDiv').prepend('<img id="theImg" src="theImg.png" />')
     $('.temp').html('Temperature: ' + wxResponse.main.temp + ' &#8457;');
     $('.humidity').text('Humidity: ' + wxResponse.main.humidity + ' %');
     $('.wind').text('Wind Speed: ' + wxResponse.wind.speed + ' MPH');
@@ -78,14 +116,16 @@ function getFiveDayForecast() {
   //    convert unix dt to utc to local
   //    var getUTCTimeFromUnixDT = moment.unix(1574100000).utc().toDate();
   //    var local = moment(getUTCTimeFromUnixDT).local().format('YYYY-MM-DD HH:mm:ss');
-  // which are the 3PMs? 7th, then 8 apart; i = 5, 13, 21, 29, 37 (ugh! magic numbers!)
+  // which are the 3PMs? 7th, then 8 apart; i = 5, 13, 21, 29, 37 (ugh! hate magic numbers!)
   // todo: implememnt functionality allowing return of 3PM forecast regardless of location/timezone
 
   return $.ajax({
     url: qWxFiveDayForecastURL,
     method: 'GET'
   }).then(function(fiveDayResponse) {
-    var subFiveDayResp = fiveDayResponse.list;
+    // todo: if not necessary to empty, reset to: var subFiveDayResp = fiveDayResponse.list;
+    var subFiveDayResp = [];
+    subFiveDayResp = fiveDayResponse.list;
       subFiveDayResp.splice(38);
       subFiveDayResp.splice(30,7);
       subFiveDayResp.splice(22,7);
@@ -93,35 +133,33 @@ function getFiveDayForecast() {
       subFiveDayResp.splice(6,7);
       subFiveDayResp.splice(0,5);
       console.log(subFiveDayResp);
+    $("#wxCards").html("");
     var wxCard = "";
     for (i = 0; i < subFiveDayResp.length; i++ ) {
       var wxCardTime = moment(moment.unix(subFiveDayResp[i].dt).utc().toDate()).format('M/D/YYYY'); //format('M/D/YYYY')
       // var wxCardTime = 'M/D/YYYY';
       var wxCardIcon = subFiveDayResp[i].weather[0].icon; // todo: more elegant method than assuming 0th index?
       var wcCardIconAlt = subFiveDayResp[i].weather[0].main;
+      // todo: find fix for date wrapping and/or getting cut off >> card with min width??
       wxCard += `<div class="card bg-primary text-white">
         <div class="card-body">
-          <h5 class="card-title">${wxCardTime}</h5>
+          <h5 class="card-title text-nowrap">${wxCardTime}</h5>
           <p class="card-text">
             <img src="https://openweathermap.org/img/wn/${wxCardIcon}.png" alt="${wcCardIconAlt}" /><br/>
-            Temp: ${subFiveDayResp[i].main.temp} &#8457;<br/>
-            Humidity: ${subFiveDayResp[i].main.humidity} %<br/>
+            Temp: <span class="text-nowrap">${subFiveDayResp[i].main.temp} &#8457;</span><br/>
+            Humidity: <span class="text-nowrap">${subFiveDayResp[i].main.humidity} %</span><br/>
           </p>
         </div>
       </div>`;
 
     }
-
     $("#wxCards").append(wxCard);
-
   });
   
 }
  
-function main() {
-  getCurrentWeather().then(getUV).then(getFiveDayForecast);
+function main(qWxCity) {
+  getCurrentWeather(qWxCity).then(getUV).then(getFiveDayForecast);
 }
-
-main();
 
 });

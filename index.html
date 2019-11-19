@@ -20,38 +20,33 @@
     <div class="container-fluid">
 
         <div class="row pt-3">
-            <div class="col-sm-4">
+            <div class="col-md-4">
               <div class="pb-3">
                 <!-- <h3>Search</h3> -->
                 <form class="form-inline">
                     <label class="sr-only" for="city">City</label>
                     <input type="text" class="form-control mb-2 mr-sm-2" id="city" placeholder="City">
-                    <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary mb-2" id="search"><i class="fas fa-search"></i></button>
                   </form>
               </div>
               <div>
-                  <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action active">Austin</a>
-                      <a href="#" class="list-group-item list-group-item-action">City</a>
-                      <a href="#" class="list-group-item list-group-item-action">City</a>
-                      <a href="#" class="list-group-item list-group-item-action">City</a>
-                  </div>
+                  <div class="list-group" id="citiesSearched"></div>
               </div>
             </div>
-            <div class="col-sm-8 bg-white">
+            <div class="col-md-8 bg-white">
                 <div class="border p-3">
-                  <h2><span class="city"></span> <span class="date" id="currentDay">()</span> <span class=""><img src='' alt='wx icon' class="icon" /></span></h2>
+                  <h2><span class="city">Current Weather</span> <span class="date" id="currentDay"></span> <span id="wxIcon"></span></h2>
                   <span style="line-height: 2.2em;">
                     <div class="temp"></div>
                     <div class="humidity"></div>
                     <div class="wind"></div>
-                    <div class="uv">UX Index: [icon]</div>
+                    <div class="uv"></div>
                   </span>
                 </div>
-                  <div class="p-3">
-                    <h2>5-day forecast</h2>
-                    <div class="card-deck" id="wxCards"></div>
-                  </div>                    
+                <div class="p-3">
+                  <h2>5-day forecast</h2>
+                  <div class="card-deck" id="wxCards"></div>
+                </div>                    
             </div>
         </div>
  
