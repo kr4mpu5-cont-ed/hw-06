@@ -126,13 +126,13 @@ function getUVIndexColor(int) {
   // https://en.wikipedia.org/wiki/Ultraviolet_index
   var strUVIndex = int;
   switch (true) {
-    case (strUVIndex >= 0 && strUVIndex <= 2.9) :
+    case (strUVIndex >= 0 && strUVIndex <= 2.99) :
       return '#5DA541'; // return green, low
-    case (strUVIndex >= 3.0 && strUVIndex <= 5.9) :
+    case (strUVIndex >= 3.0 && strUVIndex <= 5.99) :
       return '#FDF451'; // return yellow, moderate
-    case (strUVIndex >= 6.0 && strUVIndex <= 7.9) :
+    case (strUVIndex >= 6.0 && strUVIndex <= 7.99) :
       return '#E39034'; // return orange, high
-    case (strUVIndex >= 8.0 && strUVIndex <= 10.9) :
+    case (strUVIndex >= 8.0 && strUVIndex <= 10.99) :
       return '#D34427'; // return red, very high
     case (strUVIndex >= 11) :
       return '#AB6BA1'; // return violet, extreme
