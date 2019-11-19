@@ -18,12 +18,15 @@ $('#search').click(function(event) {
   wxCity = $('#city').val().trim();
   qWxCity = '&q=' + wxCity;
   console.log(qWxCity);
+
   // OpenWeather query URLs
-  qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
+  qWxQueryURL = setWxQueryURL(qWxCity);
+  console.log(qWxQueryURL);
   // qUVQueryURL needs lat/long from getCurrentWeather() for valid request
-  qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
+  qUVQueryURL = setUVQueryURL(qOWAPI);
   // returned by getCurrentWeather()
-  qWxFiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?' + qWxCity + qWxUnits + qOWAPI;
+  qWxFiveDayForecastURL = setWxFiveDayForecastURL(qWxCity);
+  console.log(qWxFiveDayForecastURL);
 
   updateCitiesSearched();
   // todo: implement write to localStorage
@@ -31,13 +34,34 @@ $('#search').click(function(event) {
   main(qWxCity);
 });
 
+function setWxQueryURL(qWxCity) {
+  // qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
+  return qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
+}
+
+function setWxFiveDayForecastURL(qWxCity) {
+  // qWxFiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?' + qWxCity + qWxUnits + qOWAPI;
+  return qWxFiveDayForecastURL = 'https://api.openweathermap.org/data/2.5/forecast?' + qWxCity + qWxUnits + qOWAPI;
+}
+
+function setUVQueryURL(qOWAPI) {
+    // qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
+  return qUVQueryURL = 'https://api.openweathermap.org/data/2.5/uvi?' + qOWAPI;
+}
+
+// todo: reset currentWx and 5dForecast URLs
 $('#citiesSearched').on('click', 'a', function(event) {
   // event.preventDefault;
   console.log('in city click event');
-  console.log('this: ' + $(this));
-  console.log('this.val().trim(): ' + $(this).val().trim());
-  var newWxCity = $(this).val().trim();
-  console.log('newWxCity: ' + newWxCity);
+  // console.log('this: ' + $(this));
+  // console.log('this.val().trim(): ' + $(this).val().trim());
+  console.log('this.text().trim(): ' + $(this).text().trim());
+  qWxCity = '&q=' + $(this).text().trim();
+  console.log('citiesSearched - qWxCity: ' + qWxCity);
+  qWxQueryURL = setWxQueryURL(qWxCity);
+  qWxFiveDayForecastURL = setWxFiveDayForecastURL(qWxCity);
+  qUVQueryURL = setUVQueryURL(qOWAPI);
+  main(qWxCity);
 });
 
 // todo: implement click to search >> reorder list
@@ -51,6 +75,7 @@ function updateCitiesSearched() {
 
 // todo: need to clear before displaying new search results?
 function getCurrentWeather(qWxCity) {
+  console.log('qWxQueryURL: ' + qWxQueryURL);
   return $.ajax({
       url: qWxQueryURL,
       method: 'GET'      
@@ -77,7 +102,10 @@ function getCurrentWeather(qWxCity) {
     // set for getUV()
     qUVLon = '&lon=' + wxResponse.coord.lon;
     qUVLat = '&lat=' + wxResponse.coord.lat;
+    // todo: implement setUVURL() method
     qUVQueryURL += ('' + qUVLat + qUVLon);
+    console.log('qUVLat: ' + qUVLat + ', qUVLon: ' + qUVLon);
+    console.log('qUVQueryURL: ' + qUVQueryURL);
   });
 }
 
@@ -86,7 +114,9 @@ function getUV() {
       url: qUVQueryURL,
       method: 'GET'
   }).then(function(uvResponse) {
+    console.log('qUVQueryURL: ' + qUVQueryURL);
     var uvIndex = uvResponse.value;
+    console.log('uvResponse.value: ' + uvResponse.value);
     var strUVIndex = getUVIndexColor(uvIndex);
     $('.uv').html('UV Index: ' + '<button class="btn" style="background-color: ' + strUVIndex + '; font-size: 1.1em; font-weight: bold">' + uvIndex + '</button>');
   });
@@ -159,6 +189,7 @@ function getFiveDayForecast() {
 }
  
 function main(qWxCity) {
+  console.log('main - qWxCity: ' + qWxCity);
   getCurrentWeather(qWxCity).then(getUV).then(getFiveDayForecast);
 }
 
