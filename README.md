@@ -2,18 +2,18 @@
 
 ## Features
 * [x] ~~Display [City, Date, Weather icon, Temperature, Humidity, Wind speed, UV index] for current weather conditions~~
-* [x] Include a search history of past search terms, selection of each performing new search
+* [x] ~~Include a search history of past search terms, selection of each performing new search~~
 * [x] ~~Include a 5-Day Forecast below the current weather conditions that displays [Date, Weather icon, Temperature, Humidity]~~
-* [x] Use functions for [Current conditions, 5-Day Forecast, Search history, UV index]
+* [x] ~~Use functions for [Current conditions, 5-Day Forecast, Search history, UV index]~~
 * [x] ~~Make multiple AJAX calls~~
 * [x] ~~Hardcode some of the parameters in the API's URL, accept user input for the others~~
 * [ ] Use `localStorage` to store any persistent data
 
 ## Minimum Requirements
-* [~] Functional, deployed application.
+* [x] ~~Functional, deployed application~~
 * [x] ~~GitHub repository with a unique name and a README describing the project~~
-* [x] User can search for weather reports by city using the openweathermap API
-* [x] After searching for a city, the following information is displayed:
+* [x] ~~User can search for weather reports by city using the openweathermap API~~
+* [x] ~~After searching for a city, the following information is displayed:~~
   * [x] ~~Current temperature~~
   * [x] ~~Current humidity~~
   * [x] ~~Windspeed~~
