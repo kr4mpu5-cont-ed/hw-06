@@ -1,8 +1,11 @@
+// todo: refactor
+
 $(document).ready(function() {
 
 // set up vars
 var wxCity;
 var qWxCity;
+var cities = [];
 // set units
 var qWxUnits = '&units=imperial';;
 // API key
@@ -13,11 +16,45 @@ var qUVLon;
 var qUVLat;
 var qWxFiveDayForecastURL;
 
+// calls main() on click
 $('#search').click(function(event) {
   event.preventDefault();
-  wxCity = $('#city').val().trim();
-  qWxCity = '&q=' + wxCity;
+  // wxCity = $('#city').val().trim();
+  // qWxCity = '&q=' + wxCity;
+  // console.log(qWxCity);
+
+  // // OpenWeather query URLs
+  // qWxQueryURL = setWxQueryURL(qWxCity);
+  // console.log(qWxQueryURL);
+  // // qUVQueryURL needs lat/long from getCurrentWeather() for valid request
+  // qUVQueryURL = setUVQueryURL(qOWAPI);
+  // // returned by getCurrentWeather()
+  // qWxFiveDayForecastURL = setWxFiveDayForecastURL(qWxCity);
+  // console.log(qWxFiveDayForecastURL);
+
+  // updateCitiesSearched();
+  // // todo: implement write to localStorage
+  // storeCity(wxCity);
+
+  // main(qWxCity);
+
+  currentWxSearch();
+});
+
+function currentWxSearch(city, fromInit) {
+
+  console.log(city);
+  if (city) {
+    qWxCity = '&q=' + wxCity;
+  } else {
+    wxCity = $('#city').val().trim();
+    qWxCity = '&q=' + wxCity;
+  }
   console.log(qWxCity);
+
+  // wxCity = $('#city').val().trim();
+  // qWxCity = '&q=' + wxCity;
+  // console.log(qWxCity);
 
   // OpenWeather query URLs
   qWxQueryURL = setWxQueryURL(qWxCity);
@@ -28,11 +65,15 @@ $('#search').click(function(event) {
   qWxFiveDayForecastURL = setWxFiveDayForecastURL(qWxCity);
   console.log(qWxFiveDayForecastURL);
 
-  updateCitiesSearched();
-  // todo: implement write to localStorage
+  if (fromInit !== 'fromInit') {
+    console.log ('in fromInit !== "fromInit"');
+    updateCitiesSearched();
+    // todo: implement write to localStorage
+    storeCity(wxCity);  
+  }
 
   main(qWxCity);
-});
+}
 
 function setWxQueryURL(qWxCity) {
   // qWxQueryURL = 'https://api.openweathermap.org/data/2.5/weather?' + qWxCity + qWxUnits + qOWAPI;
@@ -51,23 +92,21 @@ function setUVQueryURL(qOWAPI) {
 
 // todo: reset currentWx and 5dForecast URLs
 $('#citiesSearched').on('click', 'a', function(event) {
-  // event.preventDefault;
-  console.log('in city click event');
-  // console.log('this: ' + $(this));
-  // console.log('this.val().trim(): ' + $(this).val().trim());
-  console.log('this.text().trim(): ' + $(this).text().trim());
   qWxCity = '&q=' + $(this).text().trim();
-  console.log('citiesSearched - qWxCity: ' + qWxCity);
   qWxQueryURL = setWxQueryURL(qWxCity);
   qWxFiveDayForecastURL = setWxFiveDayForecastURL(qWxCity);
   qUVQueryURL = setUVQueryURL(qOWAPI);
   main(qWxCity);
 });
 
-// todo: implement click to search >> reorder list
-// todo: improvement: prevent dupes? / replace older instance with newer?
-function updateCitiesSearched() {
-  var newCity = `<a href="#" class="list-group-item list-group-item-action citySearch" style="text-transform:capitalize;">${wxCity}</a>`;
+// todo: implement click-to-search
+// todo: implement reordering of list click-to-search
+// todo: improvement - prevent dupes? / replace older instance with newer?
+function updateCitiesSearched(city) {
+  if (city) {
+    wxCity = city;
+  }
+  newCity = `<a href="#" class="list-group-item list-group-item-action citySearch" style="text-transform:capitalize;">${wxCity}</a>`;
   $('#citiesSearched').prepend(newCity);
   // <a href="#" class="list-group-item list-group-item-action active">Austin</a>
   // <a href="#" class="list-group-item list-group-item-action">City</a>
@@ -192,5 +231,45 @@ function main(qWxCity) {
   console.log('main - qWxCity: ' + qWxCity);
   getCurrentWeather(qWxCity).then(getUV).then(getFiveDayForecast);
 }
+
+// initialize cities[]
+function init() {
+    // populatre cities[] from local storage
+    getCitiesLS = localStorage.getItem('citiesLS');
+    cities = getCitiesLS ? JSON.parse(getCitiesLS) : [];
+
+
+    if (cities.length > 0) {
+
+      for (i = 0; i < cities.length; i++) {
+        console.log('run updateCitiesSearched() with ' + cities[i]);
+        // todo: call updateCitiesSearched(wxCity) against cities[]
+        updateCitiesSearched(cities[i]);
+      }
+      // main(cities[cities.length - 1]);
+      // console.log(cities[cities.length - 1]);
+      currentWxSearch(cities[cities.length - 1], 'fromInit');;
+  
+    }
+}
+
+function storeCity(wxCity) {
+      //get values from player-submitted form
+      // strPlayerInitials = document.getElementById("playerInitials").value.trim();
+      // strScore = secondsLeft;      
+      //add to scores[]
+      // scores.push([strPlayerInitials, strScore]);
+      //sort scores, high to low
+      // scores.sort(function(a,b) {
+      //     return b[1] - a[1];
+      // });
+      //write to localstorage
+      // localStorage.setItem('scoresLS', JSON.stringify(scores));
+
+      cities.push([wxCity]);
+      localStorage.setItem('citiesLS', JSON.stringify(cities));
+}
+
+init();
 
 });
